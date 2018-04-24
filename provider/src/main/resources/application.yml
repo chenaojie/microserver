@@ -1,0 +1,30 @@
+server:
+  port: 8000
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ccms_elancy
+    username: root
+    password: 123456
+  application:
+    name: microserver-simple-provider-user
+logging:
+  level:
+    root: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+health:
+info:
+  app:
+    name: @project.artifactId@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
