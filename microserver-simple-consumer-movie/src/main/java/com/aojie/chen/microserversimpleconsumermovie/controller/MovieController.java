@@ -1,6 +1,7 @@
 package com.aojie.chen.microserversimpleconsumermovie.controller;
 
 import com.aojie.chen.microserversimpleconsumermovie.pojo.User;
+import com.aojie.chen.microserversimpleconsumermovie.service.UserFeignClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,21 @@ public class MovieController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MovieController.class);
     @Autowired
     private RestTemplate restTemplate;
+
     @Autowired
     private LoadBalancerClient loadBalancerClient;
+
+    @Autowired
+    private UserFeignClient userFeignClient;
+
     @GetMapping("/user/{id}")
     public User findById(@PathVariable Long id){
-        return this.restTemplate.getForObject("http://localhost:8000/"+id,User.class);
+        return this.restTemplate.getForObject("http://microserver-simple-provider-user/"+id,User.class);
+    }
+
+    @GetMapping("/user2/{id}")
+    public User findById2(@PathVariable Long id){
+        return this.userFeignClient.findById(id);
     }
 
     @GetMapping("/log-instance")
